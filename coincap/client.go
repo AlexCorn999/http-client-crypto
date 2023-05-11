@@ -3,6 +3,7 @@ package coincap
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -49,4 +50,27 @@ func (c *Client) GetAssets() ([]Asset, error) {
 	}
 
 	return r.Assets, nil
+}
+
+// возвращает одну валюту
+func (c *Client) GetAsset(name string) (Asset, error) {
+	url := fmt.Sprintf("http://api.coincap.io/v2/assets/%s", name)
+	resp, err := c.client.Get(url)
+	if err != nil {
+		return Asset{}, err
+	}
+
+	defer resp.Body.Close()
+
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return Asset{}, err
+	}
+
+	var r assetResponse
+	if err := json.Unmarshal(body, &r); err != nil {
+		log.Fatal(err)
+	}
+
+	return r.Asset, nil
 }

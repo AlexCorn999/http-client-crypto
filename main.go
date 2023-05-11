@@ -22,4 +22,11 @@ func main() {
 	for _, asset := range assets {
 		fmt.Println(asset.Info())
 	}
+
+	asset, err := coincapClient.GetAsset("bitcoin")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Println(asset.Info())
 }
