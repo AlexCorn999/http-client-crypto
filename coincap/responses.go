@@ -2,17 +2,17 @@ package coincap
 
 import "fmt"
 
-type AssertsResponse struct {
-	Assets    []AssetData `json:"data"`
-	Timestamp int64       `json: "timestamp"`
+type assetsResponse struct {
+	Assets    []Asset `json:"data"`
+	Timestamp int64   `json: "timestamp"`
 }
 
-type AssertResponse struct {
-	Asset     AssetData `json:"data"`
-	Timestamp int64     `json: "timestamp"`
+type assetResponse struct {
+	Asset     Asset `json:"data"`
+	Timestamp int64 `json: "timestamp"`
 }
 
-type AssetData struct {
+type Asset struct {
 	Id                string `json:"id"`
 	Rank              string `json:"rank"`
 	Symbol            string `json: "symbol"`
@@ -26,6 +26,6 @@ type AssetData struct {
 	Vwap24Hr          string `json: "vwap24Hr"`
 }
 
-func (d *AssetData) Info() string {
+func (d *Asset) Info() string {
 	return fmt.Sprintf("[ID] %s | [RANK] %s | [SYMBOL] %s | [PRICE] %s", d.Id, d.Rank, d.Symbol, d.PriceUsd)
 }
